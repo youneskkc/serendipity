@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صدفة — اكتشف ما لم تكن تبحث عنه</title>
+<meta name="description" content="محرك مصادفات للمبدعين العرب — محتوى متنوع من مصادر غير متوقعة في كل زيارة">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f8f7f4;--surface:#fff;--border:#e6e2da;--text:#1c1917;--text2:#57534e;--text3:#a8a29e;
+  --accent:#7c3aed;--accent-bg:#f5f3ff;--accent-border:#ddd6fe;
+  --warm:#ea580c;--warm-bg:#fff7ed;
+  --teal:#0d9488;--teal-bg:#f0fdfa;
+  --blue:#2563eb;--blue-bg:#eff6ff;
+  --rose:#e11d48;--rose-bg:#fff1f2;
+}
+body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:18px 24px;position:sticky;top:0;z-index:100}
+.header-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+h1{font-size:22px;font-weight:800;display:flex;align-items:center;gap:8px}
+h1 span{font-size:28px}
+.header-sub{font-size:12px;color:var(--text3);max-width:300px}
+.header-actions{display:flex;align-items:center;gap:8px}
+.refresh-btn{border:1px solid var(--border);background:var(--surface);padding:8px 18px;border-radius:10px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;color:var(--text2);transition:all .15s}
+.refresh-btn:hover{border-color:#bbb;background:#fafafa}
+.refresh-btn:disabled{opacity:.4;cursor:wait}
+.counter{font-size:11px;color:var(--text3);background:var(--bg);padding:4px 10px;border-radius:8px}
+
+/* SOURCES BAR */
+.sources-bar{max-width:900px;margin:0 auto;padding:10px 24px;display:flex;gap:6px;flex-wrap:wrap}
+.src-tag{font-size:11px;padding:3px 10px;border-radius:12px;border:1px solid var(--border);color:var(--text3);background:var(--surface)}
+.src-tag.active{border-color:var(--accent-border);color:var(--accent);background:var(--accent-bg)}
+.src-tag.loading{animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* FEED */
+.feed{max-width:900px;margin:0 auto;padding:8px 24px 40px}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:10px;transition:border-color .15s;animation:fadeIn .4s ease}
+.card:hover{border-color:#ccc}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:8px}
+.card-source{font-size:11px;color:var(--text3);max-width:50%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;text-align:left}
+.card-badge{font-size:10px;font-weight:600;padding:3px 10px;border-radius:6px;white-space:nowrap}
+.badge-rss{background:var(--warm-bg);color:var(--warm)}
+.badge-wiki{background:var(--blue-bg);color:var(--blue)}
+.badge-quran{background:var(--teal-bg);color:var(--teal)}
+.badge-book{background:var(--accent-bg);color:var(--accent)}
+.badge-hn{background:var(--rose-bg);color:var(--rose)}
+.badge-today{background:#fef9c3;color:#854d0e}
+.card-title{font-size:15px;font-weight:600;line-height:1.7;margin-bottom:6px}
+.card-title a{color:var(--text);text-decoration:none}
+.card-title a:hover{text-decoration:underline;color:var(--accent)}
+.card-snippet{font-size:13px;color:var(--text2);line-height:1.8;max-height:72px;overflow:hidden;background:var(--bg);padding:8px 12px;border-radius:8px}
+.card-date{font-size:11px;color:var(--text3);margin-top:6px}
+
+/* LOADING */
+.loading-state{text-align:center;padding:60px 20px;color:var(--text3)}
+.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* EMPTY */
+.empty{text-align:center;padding:60px 20px;color:var(--text3);font-size:14px}
+
+/* FOOTER */
+footer{text-align:center;padding:24px;font-size:12px;color:var(--text3);border-top:1px solid var(--border);background:var(--surface);margin-top:20px}
+footer a{color:var(--text2);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media(max-width:600px){
+  .feed{padding:8px 12px 40px}
+  .sources-bar{padding:8px 12px}
+  .card{padding:14px 16px}
+  .header-sub{display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <h1><span>~</span> صدفة</h1>
+      <div class="header-sub">محرك مصادفات — اكتشف ما لم تكن تبحث عنه</div>
+    </div>
+    <div class="header-actions">
+      <span class="counter" id="counter">0 نتيجة</span>
+      <button class="refresh-btn" id="refreshBtn" onclick="refresh()">صدفة جديدة</button>
+    </div>
+  </div>
+</header>
+
+<div class="sources-bar" id="sourcesBar"></div>
+
+<div class="feed" id="feed">
+  <div class="loading-state" id="loadingState">
+    <div class="spinner"></div>
+    <div>جاري استكشاف المصادر...</div>
+  </div>
+</div>
+
+<footer>
+  صُنع بواسطة <a href="https://youdo.blog" target="_blank" rel="noopener">يونس بن عمارة</a>
+  بمساعدة <a href="https://mulerun.com/invitation/C5UASC63TF59" target="_blank" rel="noopener">Mulerun.com</a>
+</footer>
+
+<!-- FEEDS DATA (loaded from separate file to keep HTML clean) -->
+<script src="feeds.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
